@@ -19,7 +19,7 @@ describe Game do
       game = Game.new
       arr = Array.new(game.grid.length) { Array.new game.grid[0].length, '' }
       arr[5][4] = 'x'
-      expect(game.drop_piece_at('x', 4)).to eql(arr)
+      expect(game.drop_piece_at('x', 4)).to eql([5, 4])
     end
     it 'puts piece on top of another piece if there\'s another piece below it' do
       game = Game.new
@@ -28,7 +28,7 @@ describe Game do
       arr[4][4] = 'o'
       game.drop_piece_at('x', 4)
       p game.grid
-      expect(game.drop_piece_at('o', 4)).to eql(arr)
+      expect(game.drop_piece_at('o', 4)).to eql([4, 4])
     end
   end
 end
