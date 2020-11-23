@@ -6,12 +6,14 @@ class Game
   end
 
   def drop_piece_at(c, pos)
+    coord = nil
     grid.each_index do |idx|
-      if (!grid[idx + 1].nil? && !grid[idx + 1][pos].empty?) || grid[idx + 1].nil?
-        grid[idx][pos] = c
-        break
-      end
+      next unless (!grid[idx + 1].nil? && !grid[idx + 1][pos].empty?) || grid[idx + 1].nil?
+
+      grid[idx][pos] = c
+      coord = [idx, pos]
+      break
     end
-    grid
+    coord
   end
 end
