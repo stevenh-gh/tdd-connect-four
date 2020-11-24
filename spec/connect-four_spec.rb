@@ -40,5 +40,15 @@ describe Game do
       coord = game.drop_piece_at('x', 4)
       expect(game.check_win(coord)).to eql(true)
     end
+    it 'checks if there\'s connect four based on coordinates given' do
+      game = Game.new
+      arr = Array.new(game.grid.length) { Array.new game.grid[0].length, '' }
+      game.drop_piece_at('x', 0)
+      game.drop_piece_at('o', 1)
+      game.drop_piece_at('x', 2)
+      game.drop_piece_at('x', 3)
+      coord = game.drop_piece_at('x', 4)
+      expect(game.check_win(coord)).to eql(false)
+    end
   end
 end
