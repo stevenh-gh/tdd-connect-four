@@ -22,7 +22,7 @@ class Game
     char = grid[coord[0]][coord[1]]
     count = grid[coord[0]].reduce(0) do |acc, ele|
       unless ele.empty?
-        char == ele ? acc += 1 : 0
+        char == ele ? acc += 1 : acc = 0
       end
       acc
     end
