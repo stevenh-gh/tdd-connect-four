@@ -50,5 +50,23 @@ describe Game do
       coord = game.drop_piece_at('x', 4)
       expect(game.check_win(coord)).to eql(false)
     end
+    it 'checks for connect four vertically' do
+      game = Game.new
+      arr = Array.new(game.grid.length) { Array.new game.grid[0].length, '' }
+      game.drop_piece_at('x', 1)
+      game.drop_piece_at('x', 1)
+      game.drop_piece_at('x', 1)
+      coord = game.drop_piece_at('x', 1)
+      expect(game.check_win(coord)).to eql(true)
+    end
+    it 'checks for connect four vertically' do
+      game = Game.new
+      arr = Array.new(game.grid.length) { Array.new game.grid[0].length, '' }
+      game.drop_piece_at('x', 1)
+      game.drop_piece_at('x', 1)
+      game.drop_piece_at('o', 1)
+      coord = game.drop_piece_at('x', 1)
+      expect(game.check_win(coord)).to eql(false)
+    end
   end
 end
