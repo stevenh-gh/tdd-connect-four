@@ -16,4 +16,18 @@ class Game
     end
     coord
   end
+
+  def check_win(coord)
+    # checks horizontally
+    char = grid[coord[0]][coord[1]]
+    count = grid[coord[0]].reduce(0) do |acc, ele|
+      unless ele.empty?
+        char == ele ? acc += 1 : 0
+      end
+      acc
+    end
+    return true if count >= 4
+
+    false
+  end
 end
