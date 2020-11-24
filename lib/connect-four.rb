@@ -18,7 +18,7 @@ class Game
   end
 
   def check_win(coord)
-    check_win_horizontal(coord)
+    check_win_horizontal(coord) || check_win_vertical(coord)
   end
 
   private
@@ -27,6 +27,21 @@ class Game
     # checks horizontally
     char = grid[coord[0]][coord[1]]
     count = grid[coord[0]].reduce(0) do |acc, ele|
+      unless ele.empty?
+        char == ele ? acc += 1 : acc = 0
+      end
+      acc
+    end
+    return true if count >= 4
+
+    false
+  end
+
+  def check_win_vertical(coord)
+    char = grid[coord[0]][coord[1]]
+    vertical_arr = []
+    (0...grid.length).each { |n| vertical_arr << grid[n][coord[1]] }
+    count = vertical_arr.reduce(0) do |acc, ele|
       unless ele.empty?
         char == ele ? acc += 1 : acc = 0
       end
