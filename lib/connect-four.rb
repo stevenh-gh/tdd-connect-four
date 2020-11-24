@@ -18,6 +18,12 @@ class Game
   end
 
   def check_win(coord)
+    check_win_horizontal(coord)
+  end
+
+  private
+
+  def check_win_horizontal(coord)
     # checks horizontally
     char = grid[coord[0]][coord[1]]
     count = grid[coord[0]].reduce(0) do |acc, ele|
