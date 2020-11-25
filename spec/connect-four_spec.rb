@@ -114,5 +114,59 @@ describe Game do
       end
       expect(game.check_win(coord)).to eql(false)
     end
+    it 'checks for connect four diagonally (downwards)' do
+      game = Game.new
+      arr = Array.new(game.grid.length) { Array.new game.grid[0].length, '' }
+      game.drop_piece_at('x', 2)
+      game.drop_piece_at('x', 2)
+      game.drop_piece_at('x', 2)
+      game.drop_piece_at('o', 2)
+      game.drop_piece_at('o', 2)
+      game.drop_piece_at('x', 2)
+      game.drop_piece_at('x', 3)
+      game.drop_piece_at('o', 3)
+      game.drop_piece_at('o', 3)
+      game.drop_piece_at('x', 3)
+      game.drop_piece_at('x', 3)
+      game.drop_piece_at('o', 4)
+      game.drop_piece_at('x', 4)
+      game.drop_piece_at('o', 4)
+      game.drop_piece_at('x', 4)
+      game.drop_piece_at('o', 5)
+      game.drop_piece_at('o', 5)
+      coord = game.drop_piece_at('x', 5)
+      game.grid.each do |ele|
+        ele.each { |pi| print "[#{pi.empty? ? ' ' : pi}]" }
+        puts
+      end
+      expect(game.check_win(coord)).to eql(true)
+    end
+    it 'checks for connect four diagonally (downwards)' do
+      game = Game.new
+      arr = Array.new(game.grid.length) { Array.new game.grid[0].length, '' }
+      game.drop_piece_at('x', 2)
+      game.drop_piece_at('x', 2)
+      game.drop_piece_at('x', 2)
+      game.drop_piece_at('o', 2)
+      game.drop_piece_at('o', 2)
+      game.drop_piece_at('x', 2)
+      game.drop_piece_at('x', 3)
+      game.drop_piece_at('o', 3)
+      game.drop_piece_at('o', 3)
+      game.drop_piece_at('x', 3)
+      game.drop_piece_at('x', 3)
+      game.drop_piece_at('o', 4)
+      game.drop_piece_at('x', 4)
+      game.drop_piece_at('o', 4)
+      game.drop_piece_at('x', 4)
+      game.drop_piece_at('o', 5)
+      game.drop_piece_at('o', 5)
+      coord = game.drop_piece_at('o', 5)
+      game.grid.each do |ele|
+        ele.each { |pi| print "[#{pi.empty? ? ' ' : pi}]" }
+        puts
+      end
+      expect(game.check_win(coord)).to eql(false)
+    end
   end
 end
