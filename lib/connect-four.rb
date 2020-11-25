@@ -19,7 +19,7 @@ class Game
 
   def check_win(coord)
     check_win_horizontal(coord) || check_win_vertical(coord) ||
-      check_win_diagonal_up(coord)
+      check_win_diagonal_up(coord) || check_win_diagonal_down(coord)
   end
 
   private
@@ -81,25 +81,41 @@ class Game
 
     false
   end
+
+  def check_win_diagonal_down(coord)
+    # get top of diagonal
+    x = coord[0]
+    y = coord[1]
+    next_x = x - 1
+    next_y = y - 1
+    until grid[next_x].nil?
+      x = next_x
+      y = next_y
+      next_x = x - 1
+      next_y = y - 1
+    end
+    # get diagonal elements
+    diagonal_arr = []
+    next_x = x + 1
+    next_y = y + 1
+    until grid[next_x].nil?
+      diagonal_arr << grid[x][y]
+      x = next_x
+      y = next_y
+      next_x = x + 1
+      next_y = y + 1
+    end
+    char = grid[coord[0]][coord[1]]
+    count = diagonal_arr.reduce(0) do |acc, ele|
+      unless ele.nil?
+        unless ele.empty?
+          char == ele ? acc += 1 : acc = 0
+        end
+      end
+      acc
+    end
+    return true if count >= 4
+
+    false
+  end
 end
-game = Game.new
-arr = Array.new(game.grid.length) { Array.new game.grid[0].length, '' }
-game.drop_piece_at('x', 0)
-game.drop_piece_at('x', 1)
-game.drop_piece_at('o', 2)
-game.drop_piece_at('o', 3)
-game.drop_piece_at('x', 0)
-game.drop_piece_at('o', 1)
-game.drop_piece_at('x', 2)
-game.drop_piece_at('x', 3)
-game.drop_piece_at('x', 1)
-game.drop_piece_at('o', 2)
-game.drop_piece_at('o', 3)
-game.drop_piece_at('x', 2)
-game.drop_piece_at('x', 3)
-coord = game.drop_piece_at('x', 3)
-game.grid.each do |ele|
-  ele.each { |pi| print "[#{pi.empty? ? ' ' : pi}]" }
-  puts
-end
-p game.check_win(coord)
