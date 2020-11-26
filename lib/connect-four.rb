@@ -22,6 +22,13 @@ class Game
       check_win_diagonal_up(coord) || check_win_diagonal_down(coord)
   end
 
+  def print_grid
+    grid.each do |ele|
+      ele.each { |pi| print "[#{pi.empty? ? ' ' : pi}]" }
+      puts
+    end
+  end
+
   private
 
   def check_win_horizontal(coord)
