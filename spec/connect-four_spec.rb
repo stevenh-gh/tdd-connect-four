@@ -85,10 +85,7 @@ describe Game do
       game.drop_piece_at('x', 2)
       game.drop_piece_at('x', 3)
       coord = game.drop_piece_at('x', 3)
-      game.grid.each do |ele|
-        ele.each { |pi| print "[#{pi.empty? ? ' ' : pi}]" }
-        puts
-      end
+      game.print_grid
       expect(game.check_win(coord)).to eql(true)
     end
     it 'checks for connect four diagonally (upwards)' do
@@ -108,10 +105,7 @@ describe Game do
       game.drop_piece_at('o', 2)
       game.drop_piece_at('x', 3)
       coord = game.drop_piece_at('x', 3)
-      game.grid.each do |ele|
-        ele.each { |pi| print "[#{pi.empty? ? ' ' : pi}]" }
-        puts
-      end
+      game.print_grid
       expect(game.check_win(coord)).to eql(false)
     end
     it 'checks for connect four diagonally (downwards)' do
@@ -135,10 +129,7 @@ describe Game do
       game.drop_piece_at('o', 5)
       game.drop_piece_at('o', 5)
       coord = game.drop_piece_at('x', 5)
-      game.grid.each do |ele|
-        ele.each { |pi| print "[#{pi.empty? ? ' ' : pi}]" }
-        puts
-      end
+      game.print_grid
       expect(game.check_win(coord)).to eql(true)
     end
     it 'checks for connect four diagonally (downwards)' do
@@ -162,10 +153,7 @@ describe Game do
       game.drop_piece_at('o', 5)
       game.drop_piece_at('o', 5)
       coord = game.drop_piece_at('o', 5)
-      game.grid.each do |ele|
-        ele.each { |pi| print "[#{pi.empty? ? ' ' : pi}]" }
-        puts
-      end
+      game.print_grid
       expect(game.check_win(coord)).to eql(false)
     end
   end
