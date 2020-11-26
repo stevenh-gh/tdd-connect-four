@@ -134,3 +134,10 @@ class Game
     false
   end
 end
+class Player
+  attr_accessor :symbol
+  def initialize(symbol)
+    @symbol = symbol
+    puts "You are player #{symbol}!"
+  end
+end
