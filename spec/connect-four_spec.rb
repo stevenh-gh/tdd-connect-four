@@ -158,3 +158,10 @@ describe Game do
     end
   end
 end
+describe Player do
+  describe 'initialize' do
+    it 'should return a new player' do
+      expect(Player.new('x')).to be_a(Player)
+    end
+  end
+end
