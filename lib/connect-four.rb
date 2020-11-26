@@ -54,19 +54,27 @@ class Game
   end
 
   def check_win_diagonal_up(coord)
-    # get highest point of diagonal line
-    unless coord[0].zero?
-      x = 0
-      y = coord[1] + coord[0]
+    # get highest diagonal point
+    x = coord[0]
+    y = coord[1]
+    next_x = x - 1
+    next_y = y + 1
+    until grid[next_x].nil?
+      x = next_x
+      y = next_y
+      next_x = x - 1
+      next_y = y + 1
     end
-    # iterate down
+    # get diagonal elements
     diagonal_arr = []
-    loop do
-      diagonal_arr << grid[x][y] unless grid[x].nil?
-      break if y.zero?
-
-      x += 1
-      y -= 1
+    next_x = x + 1
+    next_y = y - 1
+    until grid[next_x].nil?
+      diagonal_arr << grid[x][y]
+      x = next_x
+      y = next_y
+      next_x = x + 1
+      next_y = y - 1
     end
     char = grid[coord[0]][coord[1]]
     count = diagonal_arr.reduce(0) do |acc, ele|
