@@ -134,38 +134,35 @@ class Game
     false
   end
 end
+def make_grid
+  ans = ''
+  row = 0
+  col = 0
+  loop do
+    print 'Use default grid size? (Y/N): '
+    ans = gets.chomp.downcase
+    break if ans == 'y' || ans == 'n'
+  end
+  if ans == 'n'
+    loop do
+      print 'Enter row size (must be at least 4): '
+      row = gets.chomp.to_i
+      break if row >= 4
+    end
+    loop do
+      print 'Enter column size: (must be at least 4): '
+      col = gets.chomp.to_i
+      break if col >= 4
+    end
+    return Game.new row, col
+  end
+  Game.new
+end
 class Player
   attr_accessor :symbol, :grid
-  def initialize(symbol)
+  def initialize(symbol, grid)
     @symbol = symbol
-    @grid = make_grid
+    @grid = grid
     puts "You are player #{symbol}!"
   end
-
-  def make_grid
-    ans = ''
-    row = 0
-    col = 0
-    loop do
-      print 'Use default grid size? (Y/N): '
-      ans = gets.chomp.downcase
-      break if ans == 'y' || ans == 'n'
-    end
-    if ans == 'n'
-      loop do
-        print 'Enter row size (must be at least 4): '
-        row = gets.chomp.to_i
-        break if row >= 4
-      end
-      loop do
-        print 'Enter column size: (must be at least 4): '
-        col = gets.chomp.to_i
-        break if col >= 4
-      end
-      return Game.new row, col
-    end
-    Game.new
-  end
 end
-p = Player.new 'x'
-p.grid.print_grid
