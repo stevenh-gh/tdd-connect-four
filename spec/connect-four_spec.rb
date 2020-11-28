@@ -161,7 +161,14 @@ end
 describe Player do
   describe 'initialize' do
     it 'should return a new player' do
-      expect(Player.new('x')).to be_a(Player)
+      expect(Player.new('x', Game.new)).to be_a(Player)
+    end
+  end
+  describe '#drop_piece' do
+    it 'should call Game#drop_piece_at and pass in the player\'s piece as parameter' do
+      grid = Game.new
+      p = Player.new 'x', grid
+      expect(p.drop_piece(2)).to eql([5, 2])
     end
   end
 end
