@@ -66,23 +66,27 @@ class Game
     y = coord[1]
     next_x = x - 1
     next_y = y + 1
-    until grid[next_x].nil?
+    until x.zero? || y == grid[0].length - 1
       x = next_x
       y = next_y
       next_x = x - 1
       next_y = y + 1
     end
     # get diagonal elements
+    print "START UP: [#{x},#{y}]"
+    puts
     diagonal_arr = []
     next_x = x + 1
     next_y = y - 1
-    until grid[next_x].nil?
+    until grid[x].nil?
       diagonal_arr << grid[x][y]
       x = next_x
       y = next_y
       next_x = x + 1
       next_y = y - 1
     end
+    print "DIAGONAL UP: #{diagonal_arr}"
+    puts
     char = grid[coord[0]][coord[1]]
     count = diagonal_arr.reduce(0) do |acc, ele|
       unless ele.nil?
@@ -103,23 +107,27 @@ class Game
     y = coord[1]
     next_x = x - 1
     next_y = y - 1
-    until grid[next_x].nil?
+    until x.zero? || y.zero?
       x = next_x
       y = next_y
       next_x = x - 1
       next_y = y - 1
     end
     # get diagonal elements
+    print "START DOWN: [#{x},#{y}]"
+    puts
     diagonal_arr = []
     next_x = x + 1
     next_y = y + 1
-    until grid[next_x].nil?
+    until grid[x].nil?
       diagonal_arr << grid[x][y]
       x = next_x
       y = next_y
       next_x = x + 1
       next_y = y + 1
     end
+    print "DIAGONAL DOWN: #{diagonal_arr}"
+    puts
     char = grid[coord[0]][coord[1]]
     count = diagonal_arr.reduce(0) do |acc, ele|
       unless ele.nil?
@@ -136,6 +144,7 @@ class Game
 end
 
 class Player
+  @@turn_count = 0
   attr_accessor :symbol, :grid
   def initialize(symbol, grid)
     @symbol = symbol
@@ -144,7 +153,12 @@ class Player
   end
 
   def drop_piece(col)
+    @@turn_count += 1
     grid.drop_piece_at symbol, col
+  end
+
+  def self.turn_count
+    @@turn_count
   end
 end
 
@@ -171,4 +185,46 @@ def make_grid
     return Game.new row, col
   end
   Game.new
+end
+
+puts 'Connect Four initialized'
+puts
+grid = make_grid
+p1 = Player.new 'x', grid
+puts 'Player x created.'
+p2 = Player.new 'o', grid
+puts 'Player o created.'
+loop do
+  col = 0
+  if Player.turn_count.even?
+    loop do
+      print 'Player x enter column number: '
+      col = gets.chomp.to_i - 1
+      break if col >= 0
+    end
+    coord = p1.drop_piece col
+    result = grid.check_win coord
+    grid.print_grid
+    print "#{coord}\n"
+    puts result
+    if result
+      puts 'Player x wins!'
+      break
+    end
+  else
+    loop do
+      print 'Player o enter column number: '
+      col = gets.chomp.to_i - 1
+      break if col >= 0
+    end
+    coord = p2.drop_piece col
+    result = grid.check_win coord
+    grid.print_grid
+    print "#{coord}\n"
+    puts result
+    if result
+      puts 'Player o wins!'
+      break
+    end
+  end
 end
