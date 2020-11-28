@@ -73,8 +73,8 @@ class Game
       next_y = y + 1
     end
     # get diagonal elements
-    print "START UP: [#{x},#{y}]"
-    puts
+    # print "START UP: [#{x},#{y}]"
+    # puts
     diagonal_arr = []
     next_x = x + 1
     next_y = y - 1
@@ -85,8 +85,8 @@ class Game
       next_x = x + 1
       next_y = y - 1
     end
-    print "DIAGONAL UP: #{diagonal_arr}"
-    puts
+    # print "DIAGONAL UP: #{diagonal_arr}"
+    # puts
     char = grid[coord[0]][coord[1]]
     count = diagonal_arr.reduce(0) do |acc, ele|
       unless ele.nil?
@@ -114,8 +114,8 @@ class Game
       next_y = y - 1
     end
     # get diagonal elements
-    print "START DOWN: [#{x},#{y}]"
-    puts
+    # print "START DOWN: [#{x},#{y}]"
+    # puts
     diagonal_arr = []
     next_x = x + 1
     next_y = y + 1
@@ -126,8 +126,8 @@ class Game
       next_x = x + 1
       next_y = y + 1
     end
-    print "DIAGONAL DOWN: #{diagonal_arr}"
-    puts
+    # print "DIAGONAL DOWN: #{diagonal_arr}"
+    # puts
     char = grid[coord[0]][coord[1]]
     count = diagonal_arr.reduce(0) do |acc, ele|
       unless ele.nil?
