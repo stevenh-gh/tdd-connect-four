@@ -134,6 +134,20 @@ class Game
     false
   end
 end
+
+class Player
+  attr_accessor :symbol, :grid
+  def initialize(symbol, grid)
+    @symbol = symbol
+    @grid = grid
+    puts "You are player #{symbol}!"
+  end
+
+  def drop_piece(col)
+    grid.drop_piece_at symbol, col
+  end
+end
+
 def make_grid
   ans = ''
   row = 0
@@ -157,12 +171,4 @@ def make_grid
     return Game.new row, col
   end
   Game.new
-end
-class Player
-  attr_accessor :symbol, :grid
-  def initialize(symbol, grid)
-    @symbol = symbol
-    @grid = grid
-    puts "You are player #{symbol}!"
-  end
 end
