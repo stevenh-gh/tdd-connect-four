@@ -19,7 +19,7 @@ class Game
 
   def check_win(coord)
     check_win_horizontal(coord) || check_win_vertical(coord) ||
-      check_win_diagonal_up(coord) || check_win_diagonal_down(coord)
+      check_win_diagonal(coord, 'up') || check_win_diagonal(coord, 'down')
   end
 
   def print_grid
@@ -32,7 +32,6 @@ class Game
   private
 
   def check_win_horizontal(coord)
-    # checks horizontally
     verify_connect_four grid[coord[0]], grid[coord[0]][coord[1]]
   end
 
@@ -42,63 +41,11 @@ class Game
     verify_connect_four vertical_arr, grid[coord[0]][coord[1]]
   end
 
-  def check_win_diagonal_up(coord)
-    # get highest diagonal point
-    x = coord[0]
-    y = coord[1]
-    next_x = x - 1
-    next_y = y + 1
-    until x.zero? || y == grid[0].length - 1
-      x = next_x
-      y = next_y
-      next_x = x - 1
-      next_y = y + 1
-    end
-    # get diagonal elements
-    # print "START UP: [#{x},#{y}]"
-    # puts
-    diagonal_arr = []
-    next_x = x + 1
-    next_y = y - 1
-    until grid[x].nil?
-      diagonal_arr << grid[x][y]
-      x = next_x
-      y = next_y
-      next_x = x + 1
-      next_y = y - 1
-    end
-    # print "DIAGONAL UP: #{diagonal_arr}"
-    # puts
-    verify_connect_four diagonal_arr, grid[coord[0]][coord[1]]
-  end
-
-  def check_win_diagonal_down(coord)
-    # get top of diagonal
-    x = coord[0]
-    y = coord[1]
-    next_x = x - 1
-    next_y = y - 1
-    until x.zero? || y.zero?
-      x = next_x
-      y = next_y
-      next_x = x - 1
-      next_y = y - 1
-    end
-    # get diagonal elements
-    # print "START DOWN: [#{x},#{y}]"
-    # puts
-    diagonal_arr = []
-    next_x = x + 1
-    next_y = y + 1
-    until grid[x].nil?
-      diagonal_arr << grid[x][y]
-      x = next_x
-      y = next_y
-      next_x = x + 1
-      next_y = y + 1
-    end
-    # print "DIAGONAL DOWN: #{diagonal_arr}"
-    # puts
+  def check_win_diagonal(coord, dir)
+    c = get_top_diagonal_coord coord[0], coord[1], dir
+    x = c[0]
+    y = c[1]
+    diagonal_arr = make_diagonal_array x, y, dir
     verify_connect_four diagonal_arr, grid[coord[0]][coord[1]]
   end
 
@@ -114,6 +61,38 @@ class Game
     return true if count >= 4
 
     false
+  end
+
+  def get_top_diagonal_coord(c0, c1, dir)
+    direction = dir == 'up'
+    x = c0
+    y = c1
+    next_x = x - 1
+    next_y = direction ? y + 1 : y - 1
+    until x.zero? || (direction ? (y == grid[0].length - 1) : y.zero?)
+      x = next_x
+      y = next_y
+      next_x = x - 1
+      next_y = direction ? y + 1 : y - 1
+    end
+    [x, y]
+  end
+
+  def make_diagonal_array(xcoord, ycoord, dir)
+    direction = dir == 'up'
+    diagonal_arr = []
+    x = xcoord
+    y = ycoord
+    next_x = x + 1
+    next_y = direction ? y - 1 : y + 1
+    until grid[x].nil?
+      diagonal_arr << grid[x][y]
+      x = next_x
+      y = next_y
+      next_x = x + 1
+      next_y = direction ? y - 1 : y + 1
+    end
+    diagonal_arr
   end
 end
 
