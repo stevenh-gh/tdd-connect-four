@@ -162,6 +162,11 @@ class Player
   end
 end
 
+def prompt_size(rc)
+  print "Enter #{rc} size (must be at least 4): "
+  gets.chomp.to_i
+end
+
 def make_grid
   ans = ''
   row = 0
@@ -173,13 +178,11 @@ def make_grid
   end
   if ans == 'n'
     loop do
-      print 'Enter row size (must be at least 4): '
-      row = gets.chomp.to_i
+      row = prompt_size 'row'
       break if row >= 4
     end
     loop do
-      print 'Enter column size: (must be at least 4): '
-      col = gets.chomp.to_i
+      col = prompt_size 'col'
       break if col >= 4
     end
     return Game.new row, col
@@ -187,44 +190,37 @@ def make_grid
   Game.new
 end
 
+def make_player(symbol, grid)
+  puts "Player #{symbol} created."
+  Player.new symbol, grid
+end
+
+def player_turn(player, grid, col)
+  loop do
+    print "Player #{player.symbol} enter column number: "
+    col = gets.chomp.to_i - 1
+    break if col >= 0 && col < grid.grid[0].length
+  end
+  coord = player.drop_piece col
+  result = grid.check_win coord
+  grid.print_grid
+  print "#{coord}\n"
+  puts result
+  result
+end
+
 puts 'Connect Four initialized'
 puts
 grid = make_grid
-p1 = Player.new 'x', grid
-puts 'Player x created.'
-p2 = Player.new 'o', grid
-puts 'Player o created.'
+p1 = make_player 'x', grid
+p2 = make_player 'o', grid
 loop do
   col = 0
   if Player.turn_count.even?
-    loop do
-      print 'Player x enter column number: '
-      col = gets.chomp.to_i - 1
-      break if col >= 0
-    end
-    coord = p1.drop_piece col
-    result = grid.check_win coord
-    grid.print_grid
-    print "#{coord}\n"
-    puts result
-    if result
-      puts 'Player x wins!'
-      break
-    end
+    result = player_turn p1, grid, col
+    (puts 'Player x wins!'; break) if result
   else
-    loop do
-      print 'Player o enter column number: '
-      col = gets.chomp.to_i - 1
-      break if col >= 0
-    end
-    coord = p2.drop_piece col
-    result = grid.check_win coord
-    grid.print_grid
-    print "#{coord}\n"
-    puts result
-    if result
-      puts 'Player o wins!'
-      break
-    end
+    result = player_turn p2, grid, col
+    (puts 'Player o wins!'; break) if result
   end
 end
