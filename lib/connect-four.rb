@@ -158,7 +158,7 @@ def player_turn(player, grid, col)
   result = grid.check_win coord
   grid.print_grid
   print "#{coord}\n"
-  puts result
+  # puts result
   result
 end
 
