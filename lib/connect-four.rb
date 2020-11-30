@@ -33,31 +33,13 @@ class Game
 
   def check_win_horizontal(coord)
     # checks horizontally
-    char = grid[coord[0]][coord[1]]
-    count = grid[coord[0]].reduce(0) do |acc, ele|
-      unless ele.empty?
-        char == ele ? acc += 1 : acc = 0
-      end
-      acc
-    end
-    return true if count >= 4
-
-    false
+    verify_connect_four grid[coord[0]], grid[coord[0]][coord[1]]
   end
 
   def check_win_vertical(coord)
-    char = grid[coord[0]][coord[1]]
     vertical_arr = []
     (0...grid.length).each { |n| vertical_arr << grid[n][coord[1]] }
-    count = vertical_arr.reduce(0) do |acc, ele|
-      unless ele.empty?
-        char == ele ? acc += 1 : acc = 0
-      end
-      acc
-    end
-    return true if count >= 4
-
-    false
+    verify_connect_four vertical_arr, grid[coord[0]][coord[1]]
   end
 
   def check_win_diagonal_up(coord)
@@ -87,18 +69,7 @@ class Game
     end
     # print "DIAGONAL UP: #{diagonal_arr}"
     # puts
-    char = grid[coord[0]][coord[1]]
-    count = diagonal_arr.reduce(0) do |acc, ele|
-      unless ele.nil?
-        unless ele.empty?
-          char == ele ? acc += 1 : acc = 0
-        end
-      end
-      acc
-    end
-    return true if count >= 4
-
-    false
+    verify_connect_four diagonal_arr, grid[coord[0]][coord[1]]
   end
 
   def check_win_diagonal_down(coord)
@@ -128,8 +99,11 @@ class Game
     end
     # print "DIAGONAL DOWN: #{diagonal_arr}"
     # puts
-    char = grid[coord[0]][coord[1]]
-    count = diagonal_arr.reduce(0) do |acc, ele|
+    verify_connect_four diagonal_arr, grid[coord[0]][coord[1]]
+  end
+
+  def verify_connect_four(arr, char)
+    count = arr.reduce(0) do |acc, ele|
       unless ele.nil?
         unless ele.empty?
           char == ele ? acc += 1 : acc = 0
